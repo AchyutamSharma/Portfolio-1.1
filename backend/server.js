@@ -12,18 +12,33 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+// Configure CORS dynamically from environment so deployed frontends can be allowed
+const rawFrontendUrls = (process.env.FRONTEND_URLS || process.env.FRONTEND_URL || "http://localhost:5173");
+const frontendOrigins = rawFrontendUrls
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+console.log('Allowed frontend origins:', frontendOrigins);
+
 app.use(
   cors({
-    origin: [
-      "https://www.akshutam.app",
-      "https://akshutam.app",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like curl/postman)
+      if (!origin) return callback(null, true);
+      if (frontendOrigins.indexOf(origin) !== -1) {
+        return callback(null, true);
+      }
+      return callback(new Error('CORS policy: This origin is not allowed'), false);
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
   })
 );
-app.options("*", cors());
+
+// Ensure preflight requests are handled
+app.options('*', cors());
 
 const PORT = Number(process.env.PORT) || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017";
