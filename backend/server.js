@@ -73,6 +73,7 @@ const maskSecret = (value) => {
 
 let currentAdminPassword = process.env.ADMIN_PASSWORD || "AKS";
 const messages = [];
+let portfolioCache = JSON.parse(JSON.stringify(portfolioData));
 
 const insertContactMessageToDb = async (payload) => {
   if (!isMongoAvailable || !mongoDb) {
@@ -168,6 +169,8 @@ const fetchPortfolioFromDb = async () => {
 };
 
 const savePortfolioToDb = async (data) => {
+  portfolioCache = data;
+
   if (!isMongoAvailable || !mongoDb) {
     return { error: new Error("MongoDB unavailable") };
   }
@@ -431,7 +434,10 @@ app.get("/api/portfolio", async (req, res) => {
     console.error("MongoDB portfolio fetch failed:", error);
   }
 
-  const portfolio = data || portfolioData;
+  const portfolio = data || portfolioCache;
+  if (data) {
+    portfolioCache = data;
+  }
   return res.json({ success: true, portfolio });
 });
 
@@ -442,9 +448,13 @@ app.post("/api/portfolio", async (req, res) => {
   }
 
   const { error } = await savePortfolioToDb(portfolio);
-  if (error) {
+  if (error && isMongoAvailable) {
     console.error("MongoDB portfolio save failed:", error);
     return res.status(500).json({ success: false, message: "Unable to save portfolio data" });
+  }
+
+  if (error && !isMongoAvailable) {
+    console.warn("MongoDB unavailable, using in-memory portfolio cache for this deployment.");
   }
 
   return res.json({ success: true, portfolio });
