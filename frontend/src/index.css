@@ -1,0 +1,263 @@
+/* =========================================================
+   AUTHKIT — MIDNIGHT COMMAND CENTER
+   Design tokens + global overrides for Achyutam's portfolio
+========================================================= */
+
+/* Google Fonts — Inter (Untitled Sans sub), Space Grotesk (aeonikPro sub),
+   IBM Plex Mono (dotDigital sub) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+/* ── Design Tokens ──────────────────────────────────────── */
+:root {
+  /* Colors */
+  --color-midnight-abyss:  #05060f;
+  --color-ghost-white:     #ffffff;
+  --color-comet:           #d8ecf8;
+  --color-arctic-mist:     #d1e4fa;
+  --color-celestial-light: #b6d9fc;
+  --color-azure-glow:      #c7d3ea;
+  --color-slate-dew:       #3f4959;
+  --color-whisper-blue:    #9da7ba;
+  --color-neon-violet:     #663af3;
+  --color-interstellar-gray: #81899b;
+  --color-system-highlight-border: rgba(186, 215, 247, 0.12);
+
+  /* Gradients */
+  --gradient-twilight: linear-gradient(0deg, rgb(216,236,248) 0%, rgb(152,192,239) 100%);
+  --gradient-system-border: linear-gradient(90deg, rgba(0,0,0,0), rgba(186,215,247,0.12), rgba(0,0,0,0));
+
+  /* Typography */
+  --font-body:     'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display:  'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:     'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Shadows */
+  --shadow-sm:       rgba(186,207,247,0.32) 0px 0px 6px 0px;
+  --shadow-md:       rgba(238,186,247,0.24) 0px 0px 12px 0px;
+  --shadow-subtle:   rgba(186,215,247,0.12) 0px 0px 0px 1px inset;
+  --shadow-card:     rgba(199,211,234,0.12) 0px 1px 1px 0px inset,
+                     rgba(199,211,234,0.05) 0px 24px 48px 0px inset,
+                     rgba(6,6,14,0.7) 0px 24px 32px 0px;
+  --shadow-form:     rgba(216,236,248,0.2) 0px 1px 1px 0px inset,
+                     rgba(168,216,245,0.06) 0px 24px 48px 0px inset,
+                     rgba(0,0,0,0.3) 0px 16px 32px 0px;
+
+  /* Border Radius */
+  --radius-pill:   999px;
+  --radius-card:   14px;
+  --radius-badge:  6px;
+  --radius-input:  4px;
+  --radius-button: 999px;
+
+  /* Spacing */
+  --section-gap:   48px;
+  --card-padding:  24px;
+  --element-gap:   8px;
+}
+
+/* ── Global Base ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-midnight-abyss);
+  color: var(--color-comet);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.01px;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-align: unset;
+  min-height: 100vh;
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-ghost-white);
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
+input, textarea, select {
+  background-color: transparent;
+  color: inherit;
+  font-family: var(--font-body);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-whisper-blue);
+}
+
+/* ── Animated Background Overlay ───────────────────────── */
+@keyframes backgroundDrift {
+  0%   { background-position: 0% 0%, 100% 100%, 0% 0%, 100% 100%; }
+  50%  { background-position: 100% 0%, 0% 100%, 120px 120px, -120px -120px; }
+  100% { background-position: 0% 0%, 100% 100%, 0% 0%, 100% 100%; }
+}
+
+.animated-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 18% 12%, rgba(102,58,243,0.09) 0%, transparent 38%),
+    radial-gradient(ellipse at 82% 18%, rgba(182,217,252,0.05) 0%, transparent 32%),
+    radial-gradient(ellipse at 50% 85%, rgba(102,58,243,0.05) 0%, transparent 40%),
+    linear-gradient(90deg, rgba(186,215,247,0.015) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(186,215,247,0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+  animation: backgroundDrift 32s linear infinite;
+}
+
+/* ── Page & Reveal Animations ───────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-page-fade {
+  animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1),
+              transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Float animation (Hero blobs) ───────────────────────── */
+@keyframes float {
+  0%, 100% { opacity: 0.12; transform: translateY(0) scale(1); }
+  33%       { opacity: 0.20; transform: translateY(-18px) scale(1.08); }
+  66%       { opacity: 0.08; transform: translateY(10px) scale(0.94); }
+}
+
+.animate-float { animation: float 7s ease-in-out infinite; }
+
+/* ── Shimmer (optional accent text) ────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.animate-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgba(102,58,243,0.3),
+    rgba(182,217,252,0.85),
+    rgba(199,211,234,0.4)
+  );
+  background-size: 400% 100%;
+  animation: shimmer 3.4s linear infinite;
+}
+
+/* ── Slide text (Hero name) ─────────────────────────────── */
+@keyframes slideText {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(6px); }
+}
+
+.animate-slide-text {
+  display: inline-block;
+  animation: slideText 5s ease-in-out infinite;
+}
+
+/* ── Chatbot open animation ─────────────────────────────── */
+@keyframes chatScale {
+  from { opacity: 0; transform: translateY(20px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-chat-scale { animation: chatScale 0.32s cubic-bezier(0.22,1,0.36,1); }
+
+/* ── Glassy Feature Card ────────────────────────────────── */
+.glow-card {
+  background: rgba(186,214,247,0.03);
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--shadow-card);
+  border-color: rgba(186,215,247,0.10) !important;
+  transition:
+    transform 0.4s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.glow-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow:
+    var(--shadow-card),
+    0 0 28px rgba(102,58,243,0.18),
+    var(--shadow-sm);
+  border-color: rgba(102,58,243,0.35) !important;
+}
+.no-hover:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-card) !important;
+  border-color: rgba(186,215,247,0.10) !important;
+}
+
+/* ── Pill Buttons ───────────────────────────────────────── */
+.glow-button {
+  border-radius: var(--radius-button) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  box-shadow: rgba(186,214,247,0.06) 0px 0px 0px 1px inset;
+}
+
+.glow-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    rgba(186,214,247,0.06) 0px 0px 0px 1px inset,
+    var(--shadow-sm);
+}
+
+/* ── Text Glow (heading accent) ─────────────────────────── */
+.text-glow {
+  text-shadow: 0 0 20px rgba(102,58,243,0.35), 0 0 6px rgba(182,217,252,0.15);
+}
+
+/* ── Nav blur ───────────────────────────────────────────── */
+.nav-blur {
+  background: rgba(5,6,15,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-subtle);
+}
+
+/* ── Skill bar colors → new palette ────────────────────── */
+.skill-bar-language  { background: linear-gradient(90deg, #663af3, #8b6aff); }
+.skill-bar-framework { background: linear-gradient(90deg, #b6d9fc, #8ab5e8); }
+.skill-bar-database  { background: linear-gradient(90deg, #3f4959, #81899b); }
+.skill-bar-tool      { background: linear-gradient(90deg, #d1e4fa, #9da7ba); }
+
+/* ── Timeline path ──────────────────────────────────────── */
+.timeline-path {
+  border-left-color: rgba(102,58,243,0.25) !important;
+}
+
+/* ── Scrollbar (thin, themed) ───────────────────────────── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-midnight-abyss); }
+::-webkit-scrollbar-thumb { background: rgba(102,58,243,0.4); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(102,58,243,0.65); }
