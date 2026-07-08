@@ -2,8 +2,19 @@ const normalizeBaseUrl = (value) => (value || '').replace(/\/$/, '');
 
 export const getApiBaseUrlCandidates = () => {
   const configured = normalizeBaseUrl(import.meta.env.VITE_API_URL);
+  // In production prefer the configured VITE_API_URL only.
   const candidates = [];
 
+  if (import.meta.env.PROD) {
+    if (configured) return [configured];
+    // Fallback to current origin if VITE_API_URL not set in prod (less ideal).
+    if (typeof window !== 'undefined' && window.location?.origin) {
+      return [normalizeBaseUrl(window.location.origin)];
+    }
+    return [];
+  }
+
+  // Development: prefer explicit config, then local dev fallbacks, then current origin.
   if (configured) {
     candidates.push(configured);
   }
