@@ -102,6 +102,19 @@ input::placeholder, textarea::placeholder {
   color: var(--color-whisper-blue);
 }
 
+.admin-input {
+  border: 1px solid rgb(31 41 55);
+  background: #070d1a;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  outline: none;
+}
+
+.admin-input:focus {
+  border-color: rgb(6 182 212);
+}
+
 /* ── Animated Background Overlay ───────────────────────── */
 @keyframes backgroundDrift {
   0%   { background-position: 0% 0%, 100% 100%, 0% 0%, 100% 100%; }
