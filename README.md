@@ -8,7 +8,7 @@ This repository includes:
 
 - `frontend/` — React application with portfolio pages, contact form, admin panel, and chatbot widget
 - `backend/` — Express API server for contact submissions and admin tools
-- `frontend/src/data.js` — central portfolio data source for profile, projects, skills, and education
+- `frontend/src/data.js` — central portfolio data source for profile, projects, skills, education, and certificates
 
 ## Tech Stack
 
@@ -116,6 +116,10 @@ Supported variables:
 - `PORT` — backend server port (default: `5000`)
 - `ADMIN_PASSWORD` — admin password in .env file
 - `GEMINI_API_KEY` — optional AI/chat integration key (commented in `server.js`)
+- `MONGODB_URI` — connection string for MongoDB (production)
+- `MONGODB_DB_NAME` — optional DB name (defaults configured in server)
+- `FRONTEND_URLS` or `FRONTEND_URL` — comma-separated allowed frontend origins for CORS (used by backend on Render)
+- `VITE_API_URL` — base API URL for frontend production builds (set in Vercel environment variables)
 
 ## Customize Content
 
@@ -125,6 +129,7 @@ Update `frontend/src/data.js` to change displayed portfolio content.
 - `projects` — project cards, descriptions, links, tags
 - `skills` — skill categories and proficiency values
 - `education` — timeline entries and credentials
+- `certificates` — array of certificate objects (title, issuer, year, optional link)
 
 ## Notes for Developers
 
@@ -132,6 +137,7 @@ Update `frontend/src/data.js` to change displayed portfolio content.
 - Backend uses Express and is configured for CORS from the frontend origin.
 - The contact form data is stored in memory while the server is running.
 - The admin panel uses a simple password-based auth flow.
+ - Portfolio content (including `certificates`) is persisted in MongoDB when `MONGODB_URI` is configured. The backend stores a single portfolio document with `_id: "portfolio"`. The admin panel writes the full portfolio object to the API (`POST /api/portfolio`).
 
 ## License
 

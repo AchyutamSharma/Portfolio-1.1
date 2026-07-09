@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import { portfolioData } from '../data';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 
 const Education = () => {
   const savedData = usePortfolioData();
 
-  const currentEducation = savedData.education || education;
-  const currentProfile = savedData.profile || profile;
+  const currentEducation = savedData.education || portfolioData.education;
+  const currentProfile = savedData.profile || portfolioData.profile;
 
   const handleOpenResume = () => {
     if (!currentProfile.resumeUrl) return;

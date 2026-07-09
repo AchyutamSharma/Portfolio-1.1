@@ -1,6 +1,6 @@
-import React from 'react';
 import { portfolioData } from '../data';
 import { usePortfolioData } from '../hooks/usePortfolioData';
+import Certificates from './Certificates';
 
 const About = () => {
   const savedData = usePortfolioData();
@@ -88,6 +88,10 @@ const About = () => {
               </div>
             ))}
           </div>
+        </div>
+        {/* Certificates section (DB-backed) */}
+        <div className="col-span-1 md:col-span-2">
+          <Certificates />
         </div>
       </div>
     </section>

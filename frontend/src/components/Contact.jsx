@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { portfolioData } from '../data';
 import { fetchApi } from '../api';
 
@@ -42,7 +42,7 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let sanitized = value;
+    let sanitized;
 
     if (name === 'email') {
       sanitized = sanitizeEmail(value);

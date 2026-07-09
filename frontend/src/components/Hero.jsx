@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { portfolioData } from '../data';
 import { usePortfolioData } from '../hooks/usePortfolioData';
 

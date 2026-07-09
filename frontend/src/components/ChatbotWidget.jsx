@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { portfolioData } from "../data";
 import { usePortfolioData } from '../hooks/usePortfolioData';
 import { fetchApi } from '../api';
 
